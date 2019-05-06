@@ -9,6 +9,20 @@ class ImageDetails(object):
         self.tag = tag
         self.repository = repository
 
+    @property
+    def repository_and_image(self):
+        name = self.image
+        if self.repository:
+            name = self.repository + "/" + name
+        return name
+
+    @property
+    def full_name(self) -> str:
+        name = self.repository_and_image
+        if self.tag:
+            name = name + ":" + self.tag
+        return name
+
     @staticmethod
     def from_dict(args_dict: dict) -> "ImageDetails":
         image: str = args_dict["image"]
@@ -23,12 +37,7 @@ class ImageDetails(object):
         return ImageDetails(image, tag, repository)
 
     def __repr__(self) -> str:
-        representation = self.image
-        if self.repository:
-            representation = self.repository + "/" + representation
-        if self.tag:
-            representation = representation + ":" + self.tag
-        return representation
+        return self.full_name
 
     def __eq__(self, other: "ImageDetails") -> bool:
         if self.image != other.image:
