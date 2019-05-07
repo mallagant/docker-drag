@@ -43,7 +43,7 @@ class Puller(object):
         resp = requests.get(url, headers=request_header, verify=False)
         return resp.json()
 
-    def _downloadimage_files(self, headers, layers_structure):
+    def _download_image_files(self, headers, layers_structure):
         imgdir = tempfile.mkdtemp()
 
         layers = layers_structure['layers']
@@ -134,7 +134,7 @@ class Puller(object):
     def run(self):
         headers = self._get_auth_headers()
         layers_structure = self._get_layers_structure(headers)
-        self._downloadimage_files(headers, layers_structure)
+        self._download_image_files(headers, layers_structure)
 
 
 def pull(image_details: Union[str, dict, ImageDetails]):
